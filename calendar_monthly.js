@@ -199,8 +199,11 @@
 
 	scheduleUpdate: function(delay) {
 		if (this.config.debugging) {
-			Log.log("                Current moment(): " + moment() + " (" + moment().format("hh:mm:ss a") + ")");
-			Log.log("scheduleUpdate with delay set at: " + delay);
+			Log.log("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+			Log.log("CALENDAR_MONTHLY IS IN DEBUG MODE!");
+			Log.log("Remove 'debugging' option from config/config.js to disable.");
+			Log.log("             Current moment(): " + moment() + " (" + moment().format("hh:mm:ss a") + ")");
+			Log.log("scheduleUpdate() delay set at: " + delay);
 		}
 		if (typeof delay !== "undefined" && delay >= 0) {
 			nextReload = delay;
@@ -213,10 +216,9 @@
 				var hours = Math.floor(nextReload.asHours());
 				var  mins = Math.floor(nextReload.asMinutes()) - hours * 60;
 				var  secs = Math.floor(nextReload.asSeconds()) - ((hours * 3600 ) + (mins * 60));
-				Log.log("     nextReload should happen at: " + delay + " (" + moment(delay).format("hh:mm:ss a") + ")");
-				Log.log("                     which is in: " + hours + " hours, " + mins + " minutes and " + secs + " seconds.");
-				Log.log("                 midnight set at: " + this.midnight + " (" + moment(this.midnight).format("hh:mm:ss a") + ")");
-				Log.log("");
+				Log.log("  nextReload should happen at: " + delay + " (" + moment(delay).format("hh:mm:ss a") + ")");
+				Log.log("                  which is in: " + hours + " hours, " + mins + " minutes and " + secs + " seconds.");
+				Log.log("              midnight set at: " + this.midnight + " (" + moment(this.midnight).format("hh:mm:ss a") + ")");
 				Log.log("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
 			}
 
@@ -231,11 +233,7 @@
 
 	reloadDom: function() {
 		if (this.config.debugging) {
-			Log.log("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
-			Log.log("CALENDAR_MONTHLY IS IN DEBUG MODE!");
-			Log.log("To turn this off, remove the 'debugging' from config/config.js.");
-			Log.log("");
-			Log.log("             Calling reloadDom()!");
+			Log.log("          Calling reloadDom()!");
 		}
 		var now = moment();
 		if (now > this.midnight) {
