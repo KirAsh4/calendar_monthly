@@ -10,6 +10,7 @@
 	// Module defaults
 	defaults: {
 		fadeSpeed: 2 * 1000,		// fade out and in for 2 seconds
+		debugging: false,
 		showHeader: true,
 		cssStyle: "block",
 		initialLoadDelay: 0
@@ -49,7 +50,6 @@
 		this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(5, "seconds");
 
 		this.loaded = false;
-		this.DEBUG = false; // Use for debugging purposes only, please set to 'false' in final release
 
 		this.scheduleUpdate(this.config.initialLoadDelay);
 	},
@@ -96,7 +96,7 @@
 			header.appendChild(headerTR);
 			wrapper.appendChild(header);
 
-			// Create TFOOT section -- currently unused
+			// Create TFOOT section -- currently used for debugging
 			var footer = document.createElement('tFoot');
 			var footerTR = document.createElement("tr");
 			footerTR.id = "calendar-tf";
@@ -104,7 +104,11 @@
 			var footerTD = document.createElement("td");
 			footerTD.colSpan ="7";
 			footerTD.className = "footer";
-			footerTD.innerHTML = "&nbsp;";
+			if (this.config.debugging) {
+				footerTD.innerHTML = "Calendar currently in DEBUG mode!<br />Please see console log.";
+			} else {
+				footerTD.innerHTML = "&nbsp;";
+			}
 
 			footerTR.appendChild(footerTD);
 			footer.appendChild(footerTR);
@@ -194,7 +198,7 @@
 	},
 
 	scheduleUpdate: function(delay) {
-		if (this.DEBUG) {
+		if (this.config.debugging) {
 			Log.log("                Current moment(): " + moment() + " (" + moment().format("hh:mm:ss a") + ")");
 			Log.log("scheduleUpdate with delay set at: " + delay);
 		}
@@ -205,13 +209,15 @@
 		if (delay > 0) {
 			// Calculate the time DIFFERENCE to that next reload!
 			nextReload = moment.duration(nextReload.diff(moment(), "milliseconds"));
-			if (this.DEBUG) {
+			if (this.config.debugging) {
 				var hours = Math.floor(nextReload.asHours());
 				var  mins = Math.floor(nextReload.asMinutes()) - hours * 60;
 				var  secs = Math.floor(nextReload.asSeconds()) - ((hours * 3600 ) + (mins * 60));
 				Log.log("     nextReload should happen at: " + delay + " (" + moment(delay).format("hh:mm:ss a") + ")");
 				Log.log("                     which is in: " + hours + " hours, " + mins + " minutes and " + secs + " seconds.");
 				Log.log("                 midnight set at: " + this.midnight + " (" + moment(this.midnight).format("hh:mm:ss a") + ")");
+				Log.log("");
+				Log.log("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
 			}
 
 		}
@@ -224,7 +230,11 @@
 	},
 
 	reloadDom: function() {
-		if (this.DEBUG) {
+		if (this.config.debugging) {
+			Log.log("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+			Log.log("CALENDAR_MONTHLY IS IN DEBUG MODE!");
+			Log.log("To turn this off, remove the 'debugging' from config/config.js.");
+			Log.log("");
 			Log.log("             Calling reloadDom()!");
 		}
 		var now = moment();
