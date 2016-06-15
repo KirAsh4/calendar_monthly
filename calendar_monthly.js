@@ -49,7 +49,7 @@
 		this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(5, "seconds");
 
 		this.loaded = false;
-		this.DEBUG = true; // Use for debugging purposes only, please set to 'false' in final release
+		this.DEBUG = false; // Use for debugging purposes only, please set to 'false' in final release
 
 		this.scheduleUpdate(this.config.initialLoadDelay);
 	},
