@@ -9,11 +9,14 @@
 
 	// Module defaults
 	defaults: {
-		fadeSpeed: 2 * 1000,		// fade out and in for 2 seconds
-		debugging: false,
-		showHeader: true,
-		cssStyle: "block",
-		initialLoadDelay: 0
+		debugging:			false,		// Turn debugging on or off -- info is displayed in console log
+		fadeSpeed:			2 * 1000,	// fade out and in for 2 seconds
+		showHeader:			true,		// Show the month and year at the top of the calendar
+		cssStyle:			"block",	// which CSS style to use, 'clear', 'block', 'slate', or 'custom'
+		initialLoadDelay:	0,			// How long to wait before loading the calendar at start
+		updateDelay:		5,			// How many seconds after midnight before a refresh
+										// This is to prevent collision with other modules refreshing
+										// at the same time.
 	},
 
 	// Required styles
@@ -45,9 +48,9 @@
 		// Set locale
 		moment.locale(config.language);
 		
-		// Calculate next midnight and add 5 seconds to avoid colliding with the clock at exact midnight
+		// Calculate next midnight and add updateDelay
 		var now = moment();
-		this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(5, "seconds");
+		this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(this.config.updateDelay, "seconds");
 
 		this.loaded = false;
 
@@ -87,7 +90,10 @@
 				var headerYearSpan = document.createElement("span");
 				headerYearSpan.id = "yearDigits";
 				headerYearSpan.innerHTML = year;
-				var headerSpace = document.createTextNode(" "); // Add space between the two elements
+				// Add space between the two elements
+				// This can be used later with the :before or :after options in the CSS
+				var headerSpace = document.createTextNode(" ");
+
 				headerTH.appendChild(headerMonthSpan);
 				headerTH.appendChild(headerSpace);
 				headerTH.appendChild(headerYearSpan);
@@ -96,7 +102,7 @@
 			header.appendChild(headerTR);
 			wrapper.appendChild(header);
 
-			// Create TFOOT section -- currently used for debugging
+			// Create TFOOT section -- currently used for debugging only
 			var footer = document.createElement('tFoot');
 			var footerTR = document.createElement("tr");
 			footerTR.id = "calendar-tf";
@@ -147,7 +153,6 @@
 					var squareContent = document.createElement("div");
 					squareContent.className = "square-content";
 					var squareContentInner = document.createElement("div");
-
 					var innerSpan = document.createElement("span");
 
 					if (j < startingDay && i == 0) {
@@ -205,6 +210,7 @@
 			Log.log("             Current moment(): " + moment() + " (" + moment().format("hh:mm:ss a") + ")");
 			Log.log("scheduleUpdate() delay set at: " + delay);
 		}
+
 		if (typeof delay !== "undefined" && delay >= 0) {
 			nextReload = delay;
 		}
@@ -217,11 +223,10 @@
 				var  mins = Math.floor(nextReload.asMinutes()) - hours * 60;
 				var  secs = Math.floor(nextReload.asSeconds()) - ((hours * 3600 ) + (mins * 60));
 				Log.log("  nextReload should happen at: " + delay + " (" + moment(delay).format("hh:mm:ss a") + ")");
-				Log.log("                  which is in: " + hours + " hours, " + mins + " minutes and " + secs + " seconds.");
+				Log.log("                  which is in: " + mins + " minutes and " + secs + " seconds.");
 				Log.log("              midnight set at: " + this.midnight + " (" + moment(this.midnight).format("hh:mm:ss a") + ")");
 				Log.log("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
 			}
-
 		}
 
 		var self = this;
@@ -235,13 +240,14 @@
 		if (this.config.debugging) {
 			Log.log("          Calling reloadDom()!");
 		}
+
 		var now = moment();
 		if (now > this.midnight) {
 			this.updateDom(this.config.animationSpeed);
-			this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(5, "seconds");
+			this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(this.config.updateDelay, "seconds");
 		}
 
-		var nextRefresh = moment([now.year(), now.month(), now.date(), now.hour() + 1]).add(5, "seconds");
+		var nextRefresh = moment([now.year(), now.month(), now.date(), now.hour() + 1]);
 		this.scheduleUpdate(nextRefresh);
 	}
 
