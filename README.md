@@ -6,7 +6,7 @@
 
 # Module: Calendar [Monthly]
 
-The `calendar_monthly` module is (currently) a simple month view calendar.
+The `calendar_monthly` module is a simple month-view calendar.
 
 ## Installing the module
 Clone this repository in your ~MagicMirror/modules/ folder:
@@ -48,6 +48,11 @@ The `calendar_monthly` module has several optional properties that can be used t
 	</tfoot>
 	<tbody>
 		<tr>
+			<td><code>fadeSpeed</code></td>
+			<td>How fast <strong>(in seconds)</strong> to fade out and back in at the midnight refresh</td>
+			<td><code>2</code> seconds</td>
+		</tr>
+		<tr>
 			<td><code>showHeader</code></td>
 			<td>This allows you to turn on or off the header on the calendar.
 			    The header consists of the month and year.</td>
@@ -60,6 +65,13 @@ The `calendar_monthly` module has several optional properties that can be used t
 				section for more information.</td>
 			<td><code>block</code> - Other options are <code>clean</code>, <code>slate</code>, and <code>custom</code>. Others
 			    may be added in the future. Please note that the <code>slate</code> style is designed for mirror-less displays.</td>
+		</tr>
+		<tr>
+			<td><code>updateDelay</code></td>
+			<td>How long <strong>(in seconds)</strong> to wait before refreshing the calendar at midnight<br />
+			    This is primarily done in case there are other modules also triggering at exactly midnight.
+				This allows the user to set a delay so the calendar won't refresh at the same time.</td>
+			<td><code>5</code> seconds</td>
 		</tr>
 	</tbody>
 </table>
@@ -82,8 +94,8 @@ The full element tree is as follows:
   </thead>
   
   <tfoot>
-    <tr>
-	  <td> </td>
+    <tr id="calender-tf">
+	  <td class="footer"> </td>
 	</tr>
   </tfoot>
   

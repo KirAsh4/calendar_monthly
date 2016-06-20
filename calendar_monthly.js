@@ -9,11 +9,11 @@
 
 	// Module defaults
 	defaults: {
-		debugging:			false,		// Turn debugging on or off -- info is displayed in console log
-		fadeSpeed:			2 * 1000,	// fade out and in for 2 seconds
+		debugging:			false,
+		initialLoadDelay:	0,
+		fadeSpeed:			2,			// How fast to fade out and in during a midnight refresh
 		showHeader:			true,		// Show the month and year at the top of the calendar
 		cssStyle:			"block",	// which CSS style to use, 'clear', 'block', 'slate', or 'custom'
-		initialLoadDelay:	0,			// How long to wait before loading the calendar at start
 		updateDelay:		5,			// How many seconds after midnight before a refresh
 										// This is to prevent collision with other modules refreshing
 										// at the same time.
@@ -243,7 +243,7 @@
 
 		var now = moment();
 		if (now > this.midnight) {
-			this.updateDom(this.config.animationSpeed);
+			this.updateDom(this.config.fadeSpeed * 1000);
 			this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(this.config.updateDelay, "seconds");
 		}
 
