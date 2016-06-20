@@ -1,9 +1,3 @@
-## WARNING!
-
-**NOTE: This module is still actively being developed!**<br />
-**What to expect:** Things can suddenly break!<br />
-**What not to expect:** Things not to break!<br />
-
 # Module: Calendar [Monthly]
 
 The `calendar_monthly` module is a simple month-view calendar.
