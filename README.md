@@ -5,7 +5,7 @@ by Michael Teeuw (https://github.com/MichMich/MagicMirror). The modules refreshe
 hour however it will only update the calendar display once a day, at midnight.
 
 ## Installing the module
-Clone this repository in your `~MagicMirror/modules/` folder:
+Clone this repository in your `~/MagicMirror/modules/` folder `( $ cd ~MagicMirror/modules/ )`:
 ````javascript
 git clone https://github.com/KirAsh4/calendar_monthly
 ````
