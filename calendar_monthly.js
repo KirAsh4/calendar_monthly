@@ -24,16 +24,16 @@
 		switch(this.config.cssStyle) {
 			case "block":
 				/* This is the default styling */
-				return ["styles.css", "styleBlock.css"];
+				return ["mcal_styles.css", "styleBlock.css"];
 				break;
 			case "slate":
-				return ["styles.css", "styleSlate.css"];
+				return ["mcal_styles.css", "styleSlate.css"];
 				break;
 			case "custom":
-				return ["styles.css", "styleCustom.css"];
+				return ["mcal_styles.css", "styleCustom.css"];
 				break;
 			default:
-				return ["styles.css"];
+				return ["mcal_styles.css"];
 		}
 	},
 
