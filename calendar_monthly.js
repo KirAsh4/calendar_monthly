@@ -47,7 +47,7 @@
 		Log.log("Starting module: " + this.name);
 		// Set locale
 		moment.locale(config.language);
-		
+
 		// Calculate next midnight and add updateDelay
 		var now = moment();
 		this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(this.config.updateDelay, "seconds");
@@ -178,7 +178,7 @@
 					squareContentInner.appendChild(innerSpan);
 					squareContent.appendChild(squareContentInner);
 					squareDiv.appendChild(squareContent);
-					bodyTD.appendChild(squareDiv);	
+					bodyTD.appendChild(squareDiv);
 					bodyTR.appendChild(bodyTD);
 				}
 				// Don't need any more rows if we've run out of days
@@ -190,7 +190,7 @@
 					var bodyTR = document.createElement("tr");
 					bodyTR.className = "weekRow";
 				}
-			}	
+			}
 
 			bodyContent.appendChild(bodyTR);
 			wrapper.appendChild(bodyContent);
