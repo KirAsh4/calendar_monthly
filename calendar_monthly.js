@@ -21,20 +21,12 @@
 
 	// Required styles
 	getStyles: function() {
-		switch(this.config.cssStyle) {
-			case "block":
-				/* This is the default styling */
-				return ["mcal_styles.css", "styleBlock.css"];
-				break;
-			case "slate":
-				return ["mcal_styles.css", "styleSlate.css"];
-				break;
-			case "custom":
-				return ["mcal_styles.css", "styleCustom.css"];
-				break;
-			default:
-				return ["mcal_styles.css"];
-		}
+		return [this.data.path + "/css/mcal.css", this.getThemeCss()];
+	},
+
+	// return css path for theme css style
+	getThemeCss: function() {
+		return this.data.path + "/css/themes/" + this.config.cssStyle + ".css";
 	},
 
 	// Required scripts
