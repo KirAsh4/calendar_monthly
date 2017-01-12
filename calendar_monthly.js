@@ -21,20 +21,12 @@
 
 	// Required styles
 	getStyles: function() {
-		switch(this.config.cssStyle) {
-			case "block":
-				/* This is the default styling */
-				return ["mcal_styles.css", "styleBlock.css"];
-				break;
-			case "slate":
-				return ["mcal_styles.css", "styleSlate.css"];
-				break;
-			case "custom":
-				return ["mcal_styles.css", "styleCustom.css"];
-				break;
-			default:
-				return ["mcal_styles.css"];
-		}
+		return [this.data.path + "/css/mcal.css", this.getThemeCss()];
+	},
+
+	// return css path for theme css style
+	getThemeCss: function() {
+		return this.data.path + "/css/themes/" + this.config.cssStyle + ".css";
 	},
 
 	// Required scripts
@@ -47,7 +39,7 @@
 		Log.log("Starting module: " + this.name);
 		// Set locale
 		moment.locale(config.language);
-		
+
 		// Calculate next midnight and add updateDelay
 		var now = moment();
 		this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(this.config.updateDelay, "seconds");
@@ -178,7 +170,7 @@
 					squareContentInner.appendChild(innerSpan);
 					squareContent.appendChild(squareContentInner);
 					squareDiv.appendChild(squareContent);
-					bodyTD.appendChild(squareDiv);	
+					bodyTD.appendChild(squareDiv);
 					bodyTR.appendChild(bodyTD);
 				}
 				// Don't need any more rows if we've run out of days
@@ -190,7 +182,7 @@
 					var bodyTR = document.createElement("tr");
 					bodyTR.className = "weekRow";
 				}
-			}	
+			}
 
 			bodyContent.appendChild(bodyTR);
 			wrapper.appendChild(bodyContent);
