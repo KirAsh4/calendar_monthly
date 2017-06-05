@@ -8,6 +8,7 @@
  Module.register("calendar_monthly", {
 	// Module defaults
 	defaults: {
+		debugging:			false,
 		fadeSpeed:			2,			// How fast to fade out and in during a midnight refresh
 		showHeader:			true,		// Show the month and year at the top of the calendar
 		cssStyle:			"block",	// which CSS style to use, 'clear', 'block', 'slate', or 'custom'
@@ -47,7 +48,10 @@
 			self.updateDom(this.config.fadeSpeed * 1000);
 			self.scheduleUpdate();
 		}, this.midnight.diff(moment()));
-		Log.info("[calendar_monthly] next update in: " + this.midnight.diff(moment(), "minutes") + "minutes");
+		
+		if (this.config.debugging) {
+			Log.info("[calendar_monthly] next update in " + this.midnight.diff(moment(), "minutes") + " minutes.");
+		}
 	},
 
 	// Override dom generator
@@ -105,7 +109,25 @@
 		}
 		bodyContent.appendChild(bodyTR);
 		wrapper.appendChild(bodyContent);
+		
+		// Create TFOOT section -- currently used for debugging only
+		var footer = document.createElement('tFoot');
+		var footerTR = document.createElement("tr");
+		footerTR.id = "calendar-tf";
 
+		var footerTD = document.createElement("td");
+		footerTD.colSpan ="7";
+		footerTD.className = "footer";
+		if (this.config.debugging) {
+			footerTD.innerHTML = "Calendar currently in DEBUG mode!<br />Please see console log.";
+		} else {
+			footerTD.innerHTML = "&nbsp;";
+		}
+		
+		footerTR.appendChild(footerTD);
+		footer.appendChild(footerTR);
+		wrapper.appendChild(footer);
+		
 		// Create TBODY section with the monthly calendar
 		var bodyContent = document.createElement("tBody");
 		var bodyTR = document.createElement("tr");
