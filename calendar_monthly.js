@@ -9,14 +9,17 @@
 
 	// Module defaults
 	defaults: {
-		debugging:			false,
-		initialLoadDelay:	0,
-		fadeSpeed:			2,			// How fast to fade out and in during a midnight refresh
-		showHeader:			true,		// Show the month and year at the top of the calendar
-		cssStyle:			"block",	// which CSS style to use, 'clear', 'block', 'slate', or 'custom'
-		updateDelay:		5,			// How many seconds after midnight before a refresh
-										// This is to prevent collision with other modules refreshing
-										// at the same time.
+		debugging:		false,
+		initialLoadDelay:	0,		// How many seconds to wait on a fresh start up.
+							// This is to prevent collision with all other modules also
+							// loading all at the same time. This only happens once,
+							// when the mirror first starts up.
+		fadeSpeed:		2,		// How fast (in seconds) to fade out and in during a midnight refresh
+		showHeader:		true,		// Show the month and year at the top of the calendar
+		cssStyle:		"block",	// which CSS style to use, 'clear', 'block', 'slate', or 'custom'
+		updateDelay:		5,		// How many seconds after midnight before a refresh
+							// This is to prevent collision with other modules refreshing
+							// at the same time.
 	},
 
 	// Required styles
@@ -54,7 +57,7 @@
 
 		this.loaded = false;
 
-		this.scheduleUpdate(this.config.initialLoadDelay);
+		this.scheduleUpdate(this.config.initialLoadDelay * 1000);
 	},
 
 	// Override dom generator
