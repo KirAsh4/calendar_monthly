@@ -59,7 +59,7 @@ The `calendar_monthly` module has several optional properties that can be used t
 			<td>Calendar_monthly allows you to use a custom CSS to style your calendar, or
 			    you can use one of the built-in ones. Please read the 'CSS Styling'
 				section for more information.</td>
-			<td><code>block</code> - Other options are <code>clean</code>, <code>slate</code>, and <code>custom</code>. Others
+			<td><code>block</code> - Other options are <code>slate</code>, and <code>custom</code>. Others
 			    may be added in the future. Please note that the <code>slate</code> style is designed for mirror-less displays.</td>
 		</tr>
 		<tr>
