@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2016 Ashley M. Kirchner
+Copyright (c) 2016-2019 Ashley M. Kirchner DBA KA4 Designs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
