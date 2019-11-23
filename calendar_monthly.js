@@ -20,6 +20,7 @@
 		updateDelay:		5,		// How many seconds after midnight before a refresh
 							// This is to prevent collision with other modules refreshing
 							// at the same time.
+		monthOffset:		0,		// Month Offset: +1 = next month
 	},
 
 	// Required styles
@@ -55,14 +56,19 @@
 	getDom: function() {
 
 		if ((moment() > this.midnight) || (!this.loaded)) {
+			var time = moment();
 
-			var month = moment().month();
-			var year = moment().year();
-			var monthName = moment().format("MMMM");
-			var monthLength = moment().daysInMonth();
+			if (this.config.monthOffset != 0)
+				time = time.add(this.config.monthOffset, 'months');
+
+			var date = this.config.monthOffset ? 0 : time.date();
+			var month = time.month();
+			var year = time.year();
+			var monthName = time.format("MMMM");
+			var monthLength = time.daysInMonth();
 
 			// Find first day of the month, LOCALE aware
-			var startingDay = moment().date(1).weekday();
+			var startingDay = time.date(1).weekday();
 
 			var wrapper = document.createElement("table");
 			wrapper.className = 'xsmall';
@@ -122,7 +128,7 @@
 			for (var i = 0; i <= 6; i++ ){
 				var bodyTD = document.createElement("td");
 				bodyTD.className = "calendar-header-day";
-				bodyTD.innerHTML = moment().weekday(i).format("ddd");
+				bodyTD.innerHTML = time.weekday(i).format("ddd");
 				bodyTR.appendChild(bodyTD);
 			}
 			bodyContent.appendChild(bodyTR);
@@ -152,9 +158,9 @@
 					if (j < startingDay && i == 0) {
 						// First row, fill in empty slots
 						innerSpan.className = "monthPrev";
-						innerSpan.innerHTML = moment().subtract(1, 'months').endOf('month').subtract((startingDay - 1) - j, 'days').date();
+						innerSpan.innerHTML = time.subtract(1, 'months').endOf('month').subtract((startingDay - 1) - j, 'days').date();
 					} else if (day <= monthLength && (i > 0 || j >= startingDay)) {
-						if (day == moment().date()) {
+						if (day == date) {
 							innerSpan.id = "day" + day;
 							innerSpan.className = "today";
 						} else {
