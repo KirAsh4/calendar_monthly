@@ -28,6 +28,12 @@
 	color: #333333;
 }
 
+.square-content .events {
+	border: 1px solid var(--event-color);
+	border-radius: 2px;
+	background-color: var(--event-color);
+}
+
 .square-content div {
 	display: table;
 	width: 100%;
