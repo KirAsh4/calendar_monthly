@@ -195,54 +195,22 @@
 		}
 
 	},
-
-	scheduleUpdate: function(delay) {
+	
+	scheduleUpdate: function(initialDelay = 0) {
+        let nextUpdate = moment().startOf('day').add({ days: 1, seconds: this.config.updateDelay + initialDelay});
+        let timeout = nextUpdate.diff(moment());
+        setTimeout(() => {
+           this.update();
+		}, timeout);
 		if (this.config.debugging) {
-			Log.log("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
-			Log.log("CALENDAR_MONTHLY IS IN DEBUG MODE!");
-			Log.log("Remove 'debugging' option from config/config.js to disable.");
-			Log.log("             Current moment(): " + moment() + " (" + moment().format("hh:mm:ss a") + ")");
-			Log.log("scheduleUpdate() delay set at: " + delay);
+			Log.info(`Current time: ${moment()}`);
+        	Log.info(`${this.name} Next update scheduled at ${nextUpdate} which is in exactly ${timeout}ms`);
 		}
+        
+    },
 
-		if (typeof delay !== "undefined" && delay >= 0) {
-			nextReload = delay;
-		}
-
-		if (delay > 0) {
-			// Calculate the time DIFFERENCE to that next reload!
-			nextReload = moment.duration(nextReload.diff(moment(), "milliseconds"));
-			if (this.config.debugging) {
-				var hours = Math.floor(nextReload.asHours());
-				var  mins = Math.floor(nextReload.asMinutes()) - hours * 60;
-				var  secs = Math.floor(nextReload.asSeconds()) - ((hours * 3600 ) + (mins * 60));
-				Log.log("  nextReload should happen at: " + delay + " (" + moment(delay).format("hh:mm:ss a") + ")");
-				Log.log("                  which is in: " + mins + " minutes and " + secs + " seconds.");
-				Log.log("              midnight set at: " + this.midnight + " (" + moment(this.midnight).format("hh:mm:ss a") + ")");
-				Log.log("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
-			}
-		}
-
-		var self = this;
-		setTimeout(function() {
-			self.reloadDom();
-		}, nextReload);
-
-	},
-
-	reloadDom: function() {
-		if (this.config.debugging) {
-			Log.log("          Calling reloadDom()!");
-		}
-
-		var now = moment();
-		if (now > this.midnight) {
-			this.updateDom(this.config.fadeSpeed * 1000);
-			this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(this.config.updateDelay, "seconds");
-		}
-
-		var nextRefresh = moment([now.year(), now.month(), now.date(), now.hour() + 1]);
-		this.scheduleUpdate(nextRefresh);
-	}
-
+	update: function() {
+        this.updateDom(this.config.fadeSpeed * 1000);
+        this.scheduleUpdate();
+    }
 });
