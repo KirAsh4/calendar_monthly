@@ -1,76 +1,76 @@
 /* Slate styling, meant for mirrorless displays */
 
-.calendar-header-day {
+.module.calendar_monthly .calendar-header-day {
 	color: #18b165;
 	font-weight: bold;
 	background-color: #2a3139;
 	border-bottom: 1px solid #232833;
 }
 
-.weekRow {
+.module.calendar_monthly .weekRow {
 	background-color: #404854;
 }
 
-#monthName {
+.module.calendar_monthly #monthName {
 	font-weight: normal;
 	color: #8a99af;
 }
 
-#yearDigits {
+.module.calendar_monthly #yearDigits {
 	color: #8a99af;
 	font-weight: normal;
 }
 
-#calendar-th {
+.module.calendar_monthly #calendar-th {
 	border-bottom: 1px solid #181b21;
 	background-color: #242930;
 	padding-top: 5px;
 	font-weight: bold;
 }
-.calendar-day {
+.module.calendar_monthly .calendar-day {
 	color: #88a0b8;
 }
 
-.monthPrev {
+.module.calendar_monthly .monthPrev {
 	color: #677176;
 }
 
-.monthNext {
+.module.calendar_monthly .monthNext {
 	color: #677176;
 }
 
-.square-box {
+.module.calendar_monthly .square-box {
 	position: relative;
 	width: 50%;
 	overflow: hidden;
 	margin: 0px auto;
 }	
 
-.square-box:before {
+.module.calendar_monthly .square-box:before {
 	content: "";
 	display: block;
 	padding-top: 20%;
 }
 
-.square-content {
+.module.calendar_monthly .square-content {
 	top: 0;
 	left: 0;
 	bottom: 0;
 	right: 0;
 }
 
-.square-content .today {
+.module.calendar_monthly .square-content .today {
 	font-weight: bold;
 	color: #ffffff;
 }
 
-.square-content div {
+.module.calendar_monthly .square-content div {
 	display: table;
 	width: 100%;
 	height: 100%;
 }
 
-.square-content span {
+.module.calendar_monthly .square-content span {
 	display: table-cell;
 	text-align: center;
 	vertical-align: middle;

@@ -3,13 +3,13 @@
  * If you wish to create a custom style, please edit the styleCustom.css file
  */
 
-#calendar-table {
+.module.calendar_monthly #calendar-table {
 	padding: 5px;
 	display: table;
 	width: 100%;
 }
 
-#calendar-th {
+.module.calendar_monthly #calendar-th {
 	font-weight: bold;
 	text-align: center;
 	font-size: 1.4em;
@@ -17,32 +17,32 @@
 	border-bottom: 1px solid #cccccc;
 }
 
-.calendar-header-day {
+.module.calendar_monthly .calendar-header-day {
 	text-align: center;
 	color: #cccccc;
 	margin: 2px 0px;
 	padding-top: 7px;
 }
 
-.calendar-day {
+.module.calendar_monthly .calendar-day {
 	text-align: center;
 	width: 14.2%;
 }
 
-.monthPrev {
+.module.calendar_monthly .monthPrev {
 	color: #444444;
 }
 
-.monthNext {
+.module.calendar_monthly .monthNext {
 	color: #444444;
 }
 
-.square-content .today {
+.module.calendar_monthly .square-content .today {
 	color: #ffffff;
 	font-weight: bold;
 }
 
-.footer {
+.module.calendar_monthly .footer {
 	text-align: center;
 	font-size: 0.9em;
 	line-height: 1.2em;
