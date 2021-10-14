@@ -154,12 +154,11 @@
 						innerSpan.className = "monthPrev";
 						innerSpan.innerHTML = moment().subtract(1, 'months').endOf('month').subtract((startingDay - 1) - j, 'days').date();
 					} else if (day <= monthLength && (i > 0 || j >= startingDay)) {
-						var dayStarts = moment().date(day).startOf('day');
-						var dayEnds = moment().date(day).endOf('day');
-						var dayEvents = (this.events || []).filter(function(event) { 
-							return event.startDate.isBetween(dayStarts, dayEnds) || event.endDate.isBetween(dayStarts, dayEnds);
+						var momentDay = moment().date(day);
+						var dayEvents = (this.events || []).filter(function(event) {
+							return momentDay.isSame(event.startDate, 'day') || momentDay.isBetween(event.startDate, event.endDate, 'day', "[)");
 						});
-						if (dayStarts.isSame(moment(), 'day')) {
+						if (momentDay.isSame(moment(), 'day')) {
 							innerSpan.id = "day" + day;
 							innerSpan.className = "today";
 						} else {
