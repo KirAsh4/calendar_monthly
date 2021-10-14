@@ -154,12 +154,20 @@
 						innerSpan.className = "monthPrev";
 						innerSpan.innerHTML = moment().subtract(1, 'months').endOf('month').subtract((startingDay - 1) - j, 'days').date();
 					} else if (day <= monthLength && (i > 0 || j >= startingDay)) {
-						if (day == moment().date()) {
+						var momentDay = moment().date(day);
+						var dayEvents = (this.events || []).filter(function(event) {
+							return momentDay.isSame(event.startDate, 'day') || momentDay.isBetween(event.startDate, event.endDate, 'day', "[)");
+						});
+						if (momentDay.isSame(moment(), 'day')) {
 							innerSpan.id = "day" + day;
 							innerSpan.className = "today";
 						} else {
 							innerSpan.id = "day" + day;
 							innerSpan.className = "daily";
+						}
+						if (dayEvents.length != 0) {
+							innerSpan.className = innerSpan.className + " events";
+							innerSpan.style = "--event-count: " + dayEvents.length + "; --event-color: " + dayEvents[0].color;
 						}
 						innerSpan.innerHTML = day;
 						day++;
@@ -243,6 +251,26 @@
 
 		var nextRefresh = moment([now.year(), now.month(), now.date(), now.hour() + 1]);
 		this.scheduleUpdate(nextRefresh);
-	}
+	},
 
+	notificationReceived: function(notification, payload, sender) {
+		var self = this;
+		if (notification == "CALENDAR_EVENTS") {
+			var result = [];
+			for (event of payload) {
+				var startDate = moment(parseInt(event.startDate));
+				var endDate = moment(parseInt(event.endDate));
+
+				result.push({
+					startDate : startDate,
+					endDate: endDate,
+					color: event.color
+				});
+			}
+			self.events = result;
+			self.loaded = false;
+
+			self.updateDom(this.config.fadeSpeed * 1000);
+		}
+	}
 });

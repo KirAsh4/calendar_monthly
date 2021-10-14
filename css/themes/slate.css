@@ -64,6 +64,10 @@
 	color: #ffffff;
 }
 
+.square-content .events {
+	color: var(--event-color);
+}
+
 .square-content div {
 	display: table;
 	width: 100%;
