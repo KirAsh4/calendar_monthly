@@ -44,7 +44,7 @@
 		
 		// Calculate next midnight and add updateDelay
 		var now = moment();
-		this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(this.config.updateDelay, "seconds");
+		this.midnight = moment(now).startOf("day").add(1, "days").add(this.config.updateDelay, "seconds");
 
 		this.loaded = false;
 
@@ -238,10 +238,10 @@
 		var now = moment();
 		if (now > this.midnight) {
 			this.updateDom(this.config.fadeSpeed * 1000);
-			this.midnight = moment([now.year(), now.month(), now.date() + 1]).add(this.config.updateDelay, "seconds");
+			this.midnight = moment(now).startOf("day").add(1, "days").add(this.config.updateDelay, "seconds");
 		}
 
-		var nextRefresh = moment([now.year(), now.month(), now.date(), now.hour() + 1]);
+		var nextRefresh = moment(now).startOf("hour").add(1, "hours");
 		this.scheduleUpdate(nextRefresh);
 	}
 
